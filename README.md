@@ -1,21 +1,31 @@
-# CodeMirror 6 language package template
+# CodeMirror 6 Boolean Language support
 
-This is an example repository containing a minimal [CodeMirror](https://codemirror.net/6/) language support package. The idea is to clone it, rename it, and edit it to create support for a new language.
+This package provides extension support for simple boolean queries typically seen in literature databases.
 
-Things you'll need to do (see the [language support example](https://codemirror.net/6/examples/lang-package/) for a more detailed tutorial):
+It is forked from [lang-example](https://github.com/codemirror/lang-example) and [https://github.com/ShreyRavi/lang-simpleboolean](https://github.com/codemirror/lang-example)
+and shares their license.
 
- * `git grep EXAMPLE` and replace all instances with your language name.
+## Syntax
+Syntax is a simple generalization of boolean syntax seen on large literature databases like PubMed. Binary operators provided are:
 
- * Rewrite the grammar in `src/syntax.grammar` to cover your language. See the [Lezer system guide](https://lezer.codemirror.net/docs/guide/#writing-a-grammar) for information on this file format.
+- `AND`
+- `OR`
+- `NOT`
 
- * Adjust the metadata in `src/index.ts` to work with your new grammar.
+Which are given in order of precedence and may either be all lower or upper case.
 
- * Adjust the grammar tests in `test/cases.txt`.
+To specify precedence, `(` and `)` may wrap any expression.
 
- * Build (`npm run prepare`) and test (`npm test`).
+All other tokens are treated as identifiers/variables.
 
- * Rewrite this readme file.
+### Examples
 
- * Optionally add a license.
+```
+ketchup AND mustard
+```
 
- * Publish. Put your package on npm under a name like `codemirror-lang-EXAMPLE`.
+```
+(rice and "soy sauce") 
+OR 
+(potatos AND cheese)
+```

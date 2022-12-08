@@ -1,11 +1,33 @@
-# Booleans
+# And
 
-#t
-#f
+AND
 
 ==>
 
-Program(Boolean, Boolean)
+Query(AND)
+
+# Or
+
+OR
+
+==>
+
+Query(OR)
+
+# Not
+
+NOT
+
+==>
+
+Query(NOT)
+
+# Operators
+six AND seven or eight
+
+==>
+
+Query(Identifier,BooleanExpression(Space,AND,Space),Identifier,BooleanExpression(Space,or,Space),Identifier)
 
 # Identifiers
 
@@ -14,7 +36,7 @@ Two_Three
 
 ==>
 
-Program(Identifier, Identifier)
+Query(Identifier,CarriageReturn,Identifier)
 
 # Strings
 
@@ -23,19 +45,12 @@ Program(Identifier, Identifier)
 
 ==>
 
-Program(String, String)
+Query(String,CarriageReturn,String)
 
-# Applications
+# expressions with parens
 
-(begin
-  (when #t
-    (print (concat "hello" " " "world")))
-  (print "DONE"))
+(chocolate or (Vanilla And fudge))
 
 ==>
 
-Program(Application(
-  Identifier,
-  Application(Identifier, Boolean, Application(
-    Identifier, Application(Identifier, String, String, String)))
-  Application(Identifier, String)))
+Query(Application("(",Identifier,BooleanExpression(Space,or,Space),Application("(",Identifier,BooleanExpression(Space,And,Space),Identifier,")"),")"))

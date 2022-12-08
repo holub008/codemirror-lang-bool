@@ -1,26 +1,64 @@
-@top Program { expression* }
+@precedence { AND @left, and @left, And @left, OR @left, or @left, Or @left, NOT @left, not @left, Not @left }
 
-@skip { space | LineComment }
+@top Query { expression* }
+
+@skip { LineComment }
 
 expression {
   Identifier |
   String |
-  Boolean |
-  Application { "(" expression* ")" }
+  BooleanExpression |
+  "AND" |
+  "and" |
+  "And" |
+  "OR" |
+  "or" |
+  "Or" |
+  "NOT" |
+  "not" |
+  "Not" |
+  Space |
+  Tab |
+  CarriageReturn |
+  Application
 }
 
+BooleanExpression {
+  expression !AND "AND" expression |
+  expression !and "and" expression |
+  expression !And "And" expression |
+  expression !OR "OR" expression |
+  expression !or "or" expression |
+  expression !Or "Or" expression |
+  expression !NOT "NOT" expression |
+  expression !not "not" expression |
+  expression !Not "Not" expression
+}
+
+Application { "(" expression* ")" }
+
 @tokens {
+  "AND" "and" "And"
+
+  "OR" "or" "Or"
+
+  "NOT" "not" "Not"
+
   Identifier { $[a-zA-Z_\-0-9]+ }
 
   String { '"' (!["\\] | "\\" _)* '"' }
 
-  Boolean { "#t" | "#f" }
-
   LineComment { ";" ![\n]* }
 
-  space { $[ \t\n\r]+ }
+  Space { $[ ]+ }
+
+  Tab { $[\t]+ }
+
+  CarriageReturn { $[\n\r]+ }
 
   "(" ")"
+
+  @precedence { "AND", "and", "And" "OR", "or", "Or" "NOT", "not", "Not", "(", ")", String, Space, Tab, CarriageReturn, Identifier }
 }
 
 @detectDelim
